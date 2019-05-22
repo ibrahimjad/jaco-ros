@@ -28,7 +28,7 @@ private:
 
   void parseTrajectoryFile(const std::string& fileName);
   void readPoseFromFile();
-  std::string isSleepLine();
+  bool isSleepLine();
 
   void waitWhileMoving();
   bool isMoving();

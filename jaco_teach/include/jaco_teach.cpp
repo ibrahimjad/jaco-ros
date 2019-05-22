@@ -99,12 +99,15 @@ bool Jaco::isFloat() {
 }
 
 
-std::string Jaco::isSleepLine() {
+bool Jaco::isSleepLine() {
   std::string word;
   std::istringstream ss(_line);
   ss >> word;
-  ss >> _sleepTime;
-  return word;
+  if (word == "SLEEP") {
+    ss >> _sleepTimeInSecond;
+    return true;
+  }
+  return false;
 }
 
 
@@ -122,8 +125,8 @@ void Jaco::parseFile() {
       openFingers(false);
     else if (_line == "HOME")
       goHome();
-    else if (isSleepLine() == "SLEEP")
-      ros::Duration(_sleepTime).sleep();
+    else if (isSleepLine())
+      ros::Duration(_sleepTimeInSecond).sleep();
   }
   _inputFile.close();
 }
@@ -209,8 +212,10 @@ void Jaco::actuateFingers() {
 
 
 void Jaco::openFile() {
-  if (!_outputFile.is_open())
+  if (!_outputFile.is_open()) {
     _outputFile.open(_homeDir + "/.jaco/trajectory.txt", std::ios::trunc);
+    _outputFile << "HOME\n";
+  }
 }
 
 

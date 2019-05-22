@@ -40,7 +40,7 @@ private:
   void saveToFile();
 
   void updateMovementType();
-  std::string isSleepLine();
+  bool isSleepLine();
   bool isFloat();
 
 
@@ -67,7 +67,7 @@ private:
   std::string _movementType;
   bool _isMovementContinous = false;
 
-  double _sleepTime;
+  double _sleepTimeInSecond;
 
   const std::string _homeDir = std::getenv("HOME");
   const float _MOVEMENT_TOLERANCE = 0.02f;

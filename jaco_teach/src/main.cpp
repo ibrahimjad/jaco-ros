@@ -2,8 +2,8 @@
 
 #define CONNECTION_TYPE "USB" // can also be "ETHERNET"
 
-#define JOINT_123_SPEED_LIMIT 10  // deg/s
-#define JOINT_456_SPEED_LIMIT 10  // deg/s
+#define JOINT_123_SPEED_LIMIT 20  // deg/s
+#define JOINT_456_SPEED_LIMIT 20  // deg/s
 
 int main(int argc, char *argv[]) {
   ros::init(argc, argv, "Jaco_teach");

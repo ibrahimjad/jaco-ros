@@ -5,13 +5,11 @@ Jaco::Jaco(ros::NodeHandle &n, boost::recursive_mutex &mut) : _pn(&n), kinova::K
   initSubPub();
   goHome();
   openFingers(true);
-  startForceControl();
 }
 
 
 Jaco::~Jaco() {
   stopAPI();
-  stopForceControl();
 
   if (isStopped())
     ROS_INFO("Disconnected from control API successfully");
@@ -84,19 +82,22 @@ void Jaco::parseTrajectoryFile(const std::string& fileName) {
       openFingers(false);
     else if (_line == "HOME")
       goHome();
-    else if (isSleepLine() == "SLEEP")
+    else if (isSleepLine())
       ros::Duration(_sleepTimeInSecond).sleep();
   }
   _inputFile.close();
 }
 
 
-std::string Jaco::isSleepLine() {
+bool Jaco::isSleepLine() {
   std::string word;
   std::istringstream ss(_line);
   ss >> word;
-  ss >> _sleepTimeInSecond;
-  return word;
+  if (word == "SLEEP") {
+    ss >> _sleepTimeInSecond;
+    return true;
+  }
+  return false;
 }
 
 
